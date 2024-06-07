@@ -7,6 +7,7 @@ import json, copy
 #   nome: str,
 #   filiais: list[int],
 #   horario: tup[ini: int, fim: int]
+#   cursos: list[str]
 
 # Variáveis globais
 _NEXT_ID = 1
@@ -67,7 +68,7 @@ def get_professor(id_professor: int) -> tuple[int, dict]:
 
     return PROFESSOR_NAO_ENCONTRADO, None  # Professor não encontrado
 
-def add_professor(nome: str, filiais: list[str], horario: tuple[str, str]) -> tuple[int, int]:
+def add_professor(nome: str, filiais: list[str], horario: tuple[str, str], cursos: list[str]) -> tuple[int, int]:
     '''
     Adiciona um professor à lista de professores.
     Retorna uma tupla com o código da operação e os dados do Professor Adicionado.
@@ -81,6 +82,7 @@ def add_professor(nome: str, filiais: list[str], horario: tuple[str, str]) -> tu
         'nome': nome,
         'filiais': filiais,  
         'horario': horario,
+        'cursos': cursos,
     })
 
     return OPERACAO_REALIZADA_COM_SUCESSO, get_professor(id)[1]
@@ -119,7 +121,7 @@ def del_curso(id_professor: int, curso: str) -> tuple[int, dict]:
     professor[1]['cursos'].remove(curso)
     return OPERACAO_REALIZADA_COM_SUCESSO, copy.deepcopy(professor[1])
 
-def set_horario(id_professor: int, ini: str, fim: str) -> tuple[int, dict]:
+def set_horario(id_professor: int, ini: int, fim: int) -> tuple[int, dict]:
     '''
     Recebe o id de um professor e um horário de início e fim.
     Atualiza o horário do professor com o horário passado.

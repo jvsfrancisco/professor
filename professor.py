@@ -1,6 +1,6 @@
 __all__ = ['inicializar', 'finalizar', 'get_professor', 'add_professor', 'add_curso', 'del_curso', 'set_horario', 'add_filial', 'del_filial', 'get_professores']
 
-import json, copy
+import json, copy, atexit
 
 # Professor:
 #   id: int,
@@ -16,15 +16,15 @@ professores = []
 
 # Códigos de erro
 OPERACAO_REALIZADA_COM_SUCESSO = 0
-ARQUIVO_NAO_ENCONTRADO = 1
-ARQUIVO_EM_FORMATO_INVALIDO = 2
-ERRO_NA_ESCRITA_DO_ARQUIVO = 3
-PROFESSOR_NAO_ENCONTRADO = 5
-FILIAL_JA_ADICIONADA = 6
-FILIAL_NAO_EXISTENTE = 7
-CURSO_JA_ADICIONADO = 8
-CURSO_NAO_EXISTENTE = 9
-HORARIO_INVALIDO = 10
+ARQUIVO_NAO_ENCONTRADO = 30
+ARQUIVO_EM_FORMATO_INVALIDO = 31
+ERRO_NA_ESCRITA_DO_ARQUIVO = 32
+PROFESSOR_NAO_ENCONTRADO = 17
+FILIAL_JA_ADICIONADA = 18
+FILIAL_NAO_EXISTENTE = 19
+CURSO_JA_ADICIONADO = 20
+CURSO_NAO_EXISTENTE = 21
+HORARIO_INVALIDO = 22
 
 
 
@@ -172,3 +172,5 @@ def get_professores() -> tuple[int, list[dict]]:
     '''
     return OPERACAO_REALIZADA_COM_SUCESSO, copy.deepcopy(professores)
 
+inicializar()
+atexit.register(finalizar)

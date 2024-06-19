@@ -30,7 +30,7 @@ class TestProfessor(unittest.TestCase):
 
     def test_add_professor(self):
         resultado, professor = add_professor("João", 
-["Centro", "Tijuca"], [8,12], 
+["Centro", "Tijuca"],  {'ini': 10, 'fim': 14}, 
 ['matematica', 'fisica'])
         self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
         self.assertIsInstance(professor['id'], int)
@@ -40,7 +40,7 @@ class TestProfessor(unittest.TestCase):
         self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
         self.assertEqual(professor['nome'], 'João')
         self.assertEqual(professor['filiais'], ["Centro", "Tijuca"])
-        self.assertEqual(professor['horario'], [8, 12])
+        self.assertEqual(professor['horario'], {'ini': 10, 'fim': 14})
         self.assertEqual(professor['cursos'], ['matematica', 'fisica'])
 
     def test_add_filial(self):
@@ -66,7 +66,7 @@ class TestProfessor(unittest.TestCase):
     def test_set_horario(self):
         resultado, professor = set_horario(1, 10, 14)
         self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
-        self.assertEqual(professor['horario'], (10, 14))
+        self.assertEqual(professor['horario'], {'ini': 10, 'fim': 14})
     
     def test_get_professores(self):
         resultado, professores = get_professores()

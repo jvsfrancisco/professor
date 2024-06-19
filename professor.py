@@ -131,7 +131,8 @@ def set_horario(id_professor: int, ini: int, fim: int) -> tuple[int, dict]:
         return professor[0]
     if ini >= fim:
         return HORARIO_INVALIDO, 'O horário de início deve ser menor que o horário de fim.'
-    professor[1]['horario'] = ini, fim
+    professor[1]['horario']['ini'] = ini
+    professor[1]['horario']['fim'] = fim
     return OPERACAO_REALIZADA_COM_SUCESSO, copy.deepcopy(professor[1])
 
 def add_filial(id_professor: int, filial: str) -> tuple[int, dict]:

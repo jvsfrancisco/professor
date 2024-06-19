@@ -14,10 +14,9 @@ CURSO_NAO_EXISTENTE = 21
 HORARIO_INVALIDO = 22
 
 class TestProfessor(unittest.TestCase):
-    
     def setUp(self):
         inicializar()
-    
+
     def tearDown(self):
         finalizar()
 
@@ -30,49 +29,52 @@ class TestProfessor(unittest.TestCase):
         self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
 
     def test_add_professor(self):
-        resultado, id_professor = add_professor("Dr. Smith")
+        resultado, professor = add_professor("João", 
+["Centro", "Tijuca"], [8,12], 
+['matematica', 'fisica'])
         self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
-        self.assertIsInstance(id_professor, int)
+        self.assertIsInstance(professor['id'], int)
 
     def test_get_professor(self):
-        _, id_professor = add_professor("Dr. Smith")
-        resultado, professor = get_professor(id_professor)
+        resultado, professor = get_professor(1)
         self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
-        self.assertEqual(professor['nome'], "Dr. Smith")
-
-    def test_add_curso(self):
-        _, id_professor = add_professor("Dr. Smith")
-        resultado = add_curso(id_professor, "Matemática")
-        self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
-
-    def test_del_curso(self):
-        _, id_professor = add_professor("Dr. Smith")
-        add_curso(id_professor, "Matemática")
-        resultado = del_curso(id_professor, "Matemática")
-        self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
-
-    def test_set_horario(self):
-        _, id_professor = add_professor("Dr. Smith")
-        resultado = set_horario(id_professor, 9, 17)
-        self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
+        self.assertEqual(professor['nome'], 'João')
+        self.assertEqual(professor['filiais'], ["Centro", "Tijuca"])
+        self.assertEqual(professor['horario'], [8, 12])
+        self.assertEqual(professor['cursos'], ['matematica', 'fisica'])
 
     def test_add_filial(self):
-        _, id_professor = add_professor("Dr. Smith")
-        resultado = add_filial(id_professor, 1)
+        resultado, professor = add_filial(1, 'Barra')
         self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
+        self.assertIn('Barra', professor['filiais'])
 
     def test_del_filial(self):
-        _, id_professor = add_professor("Dr. Smith")
-        add_filial(id_professor, 1)
-        resultado = del_filial(id_professor, 1)
+        resultado, professor = del_filial(1, 'Tijuca')
         self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
-
+        self.assertNotIn('Tijuca', professor['filiais'])
+    
+    def test_add_curso(self):
+        resultado, professor = add_curso(1, 'quimica')
+        self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
+        self.assertIn('quimica', professor['cursos'])
+    
+    def test_del_curso(self):
+        resultado, professor = del_curso(1, 'fisica')
+        self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
+        self.assertNotIn('fisica', professor['cursos'])
+    
+    def test_set_horario(self):
+        resultado, professor = set_horario(1, 10, 14)
+        self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
+        self.assertEqual(professor['horario'], (10, 14))
+    
     def test_get_professores(self):
-        add_professor("Dr. Smith")
         resultado, professores = get_professores()
         self.assertEqual(resultado, OPERACAO_REALIZADA_COM_SUCESSO)
         self.assertIsInstance(professores, list)
-        self.assertGreaterEqual(len(professores), 1)
+        self.assertIsInstance(professores[0], dict)
+        self.assertIn('João', [professor['nome'] for professor in professores])
 
 if __name__ == '__main__':
     unittest.main()
+

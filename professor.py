@@ -131,10 +131,6 @@ def set_horario(id_professor: int, ini: int, fim: int) -> tuple[int, dict]:
         return professor[0]
     if ini >= fim:
         return HORARIO_INVALIDO, 'O horário de início deve ser menor que o horário de fim.'
-    if ini[:2] < 0 or ini > 24[:2] or fim[:2] < 0 or fim[:2] > 24:
-        return HORARIO_INVALIDO, 'O horário de início e fim deve estar entre 0 e 24.'
-    if ini[2:] < 0 or ini[2:] > 59 or fim[2:] < 0 or fim[2:] > 59:
-        return HORARIO_INVALIDO, 'Os minutos devem estar entre 0 e 59.'
     professor[1]['horario'] = ini, fim
     return OPERACAO_REALIZADA_COM_SUCESSO, copy.deepcopy(professor[1])
 
